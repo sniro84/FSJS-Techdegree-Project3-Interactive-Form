@@ -1,1 +1,2 @@
-console.log("Connected");
+$('#name').focus();
+
