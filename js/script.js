@@ -6,20 +6,26 @@ $(document).ready(function() {
     // hide 'other title' by default
     $('#other-title').hide();
 
-    // hide the "Select Theme" element
+    // hide the "Select Theme" message once user clicks design drop-down list
     $('#design').find('option:contains("Select Theme")').hide();
 
+    // hide colors from color drop-down list
+    $('#color option').hide();
+
+    // show a message to the user in the color drop-down list
+    const $optionMessage = $('<option></option>').text("Please select a T-shirt theme");
+    $('#color').append($optionMessage);
+    $('#color').val($optionMessage.val());
+
+  
 });
+
 
 // other-title text field will only appear if other option will be selected.
 const $jobRole = $('#title');
 $jobRole.change(function() {
     ($jobRole.val() === 'other') ? $('#other-title').show() : $('#other-title').hide(); 
 });
-
-// make JS Puns the default theme
-$('#design').val('js puns');
-changeTheme('js-puns');
 
 // display only the colors that matches the selected design
 $('#design').change(function() {
@@ -28,7 +34,6 @@ $('#design').change(function() {
     else if ($('#design').val() === 'heart js')
         changeTheme('heart-js');
 });
-
 
 
 function changeTheme(theme)
