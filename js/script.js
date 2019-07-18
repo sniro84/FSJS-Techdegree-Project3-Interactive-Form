@@ -1,4 +1,5 @@
 
+// perform these actions when the page loads
 $(document).ready(function() {
     // set focus on the name input
     $('#name').focus();
@@ -16,8 +17,6 @@ $(document).ready(function() {
     const $optionMessage = $('<option></option>').text("Please select a T-shirt theme");
     $('#color').append($optionMessage);
     $('#color').val($optionMessage.val());
-
-  
 });
 
 
@@ -54,7 +53,9 @@ $('input[type="checkbox"]').change(function() {
     else
         $totalCost -= $cost;
     ($totalDisplay).text("Total: $" + $totalCost);
-    
+
+    // continue from here --> disable conflictiong activities
+
 
     // console.log(this);
     // console.log($textContent);
@@ -64,9 +65,6 @@ $('input[type="checkbox"]').change(function() {
     // console.log(this.checked);
     
 });
-
-
-
 
 
 
