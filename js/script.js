@@ -43,27 +43,39 @@ let $totalCost = 0;
 
 // respond to user when a box is checked/unchecked
 $('input[type="checkbox"]').change(function() {
-    const $textContent = $(this).parent().text();
-    const $dollarSignIndex = ($textContent).indexOf('$');
-    const $cost = parseInt(($textContent).slice($dollarSignIndex + 1));
-
+    const $description = $(this).parent().text();
+    const $dollarIndex = ($description).indexOf('$');
+    const $cost = parseInt(($description).slice($dollarIndex + 1));
+    const $currentActivity = this
+    
     // update total cost according to user clicks
-    if (this.checked)
+    if ($currentActivity.checked)
         $totalCost += $cost;
     else
         $totalCost -= $cost;
     ($totalDisplay).text("Total: $" + $totalCost);
 
     // continue from here --> disable conflictiong activities
-
-
-    // console.log(this);
-    // console.log($textContent);
-    // console.log($dollarSignIndex);
-    // console.log($cost);
-    // console.log(typeof($cost));
-    // console.log(this.checked);
+    const $dashIndex = ($description).indexOf('—');
+    const $commaIndex = ($description).indexOf(',');
+    const $time = ($description).slice($dashIndex + 2, $commaIndex);
+    const $spaceIndex = ($time).indexOf(" "); 
+    const $day = ($time).slice(0,$spaceIndex);
+    const $hours = ($time).slice($spaceIndex + 1);
     
+    $('input[type="checkbox"]').each(function() {
+        const $otherDescription = $(this).parent().text();
+        const $sameActivity = ($description !== $otherDescription);
+        const $includesDay = ($otherDescription).includes($day);
+        const $includesHours =  ($otherDescription).includes($hours);
+
+        if ($sameActivity && $includesDay && $includesHours)
+        {
+            this.disabled = ($currentActivity.checked) ? true : false;
+            $(this).parent()[0].style.color = ($currentActivity.checked) ? "grey" : "black";   
+        }
+            
+    });
 });
 
 function showColors(shirtCategory)

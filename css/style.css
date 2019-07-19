@@ -104,7 +104,7 @@ input:focus {
 input[type="checkbox"],
 input[type="radio"] {
 	display: inline-block;
-}
+	}
 
 button {
 	color: #fff;
