@@ -71,7 +71,7 @@ $('input[type="checkbox"]').change(function() {
 
         if ($sameActivity && $includesDay && $includesHours)
         {
-            this.disabled = ($currentActivity.checked) ? true : false;
+            $(this).disabled = ($currentActivity.checked) ? true : false;
             $(this).parent()[0].style.color = ($currentActivity.checked) ? "grey" : "black";   
         }
             
