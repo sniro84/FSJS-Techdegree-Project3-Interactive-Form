@@ -29,9 +29,9 @@ $jobRole.change(function() {
 // display only the colors that matches the selected design
 $('#design').change(function() {
     if ($('#design').val() === 'js puns')
-        changeTheme('js-puns');
+        showColors("JS Puns");
     else if ($('#design').val() === 'heart js')
-        changeTheme('heart-js');
+        showColors("I ♥ JS"); 
 });
 
 // creating a headline for the total display
@@ -66,37 +66,27 @@ $('input[type="checkbox"]').change(function() {
     
 });
 
-
-
-
-function changeTheme(theme)
+function showColors(shirtCategory)
 {
-    if (theme === 'js-puns')
-        showColors("cornflowerblue","darkslategrey","gold");
-    else  // (theme === 'heart-js')
-        showColors("tomato","steelblue","dimgrey");        
-}
-
-
-function showColors(color1,color2,color3)
-{
-    // make first color the default choice from color drop-down list.
-    $('#color').val(color1);
-
     // select the color options
     $options = $('#color option');
 
     // if the option value (e.g color) equals one of the parameters, show it in the drop-down list. 
     $options.each( function(index, element) {
-        switch (element.value)
-        {
-            case color1:  case color2:  case color3:
-                $options.eq(index).show();
-                break;
-            default:
-                $options.eq(index).hide();
-        }    
+        if (element.text.includes(shirtCategory))
+            $options.eq(index).show();
+        else
+            $options.eq(index).hide();    
     });
+
+    // make first color the default choice from color drop-down list.
+    $options.each( function(index, element) {
+        if (element.text.includes(shirtCategory))
+        {
+            $('#color').val(element.value);
+            return false;
+        }
+    });  
 }
 
 
@@ -105,6 +95,5 @@ function showColors(color1,color2,color3)
  	
 
  	
-
 
 
