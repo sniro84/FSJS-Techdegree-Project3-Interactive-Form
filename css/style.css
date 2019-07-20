@@ -17,8 +17,8 @@ button {
 body {
   font: 1em/1.5;
   font-weight: bold;
-  color: rgba(6, 49, 68, 0.9);
-	background: #e1cbee;
+  color: rgba(68, 36, 6, 0.9);
+  background: #eedfcb;
 }
 
 header {
@@ -45,8 +45,8 @@ a {
 
 form {
 	padding: .875em 1.875em 1.875em;
-	background: #b0cdf7;
-	border: 2px solid rgba(8, 63, 87, 0.7);
+	background: #e9c881;
+	border: 2px solid rgba(87, 24, 8, 0.7);
 	border-radius: 4px;
 }
 
@@ -69,7 +69,7 @@ button {
 
 legend {
 	padding-top: .5em;
-	border-top: 2px solid rgba(8, 63, 87, 0.6);
+	border-top: 2px solid rgba(87, 37, 8, 0.6);
 	margin-bottom: 1.125em;
 }
 
@@ -80,7 +80,7 @@ legend {
 }
 
 label {
-	color: #000;
+	color: rgb(14, 13, 13);
 	display: block;
 	margin-bottom: .5em;
 }
@@ -93,17 +93,17 @@ select {
 
 input {
 	font-size: 1em;
-	font-weight: 500;
+	font-weight: bold;
 	padding: .8em;
-	background: #e9f6fb;
-	border: 2px solid #b0d3e2;
+	background: #ebe9e9;
+	border: 2px solid #dbdbdb;
 	border-radius: 4px;
 	outline: none;
 }
 
 input:focus {
 	background: #fff;
-	border-color: #5e97b0;
+	border-color: #b0935e;
 	transition: border-color .4s, background-color .4s;
 }
 
@@ -115,7 +115,7 @@ input[type="radio"] {
 button {
 	color: #fff;
 	padding: .55em 1.25em;
-	background: #083f57;
+	background: #571408;
 	margin: 1.25em 0 .5em;
 	cursor: pointer;
 	border: 2px solid black;
@@ -124,8 +124,8 @@ button {
 }
 
 button:hover {
-	background: #0887bd;
-	border: 2px solid #f4f6f6;
+	background: #f5911e;
+	border: 2px solid #f6f5f4;
 }
 
 input, 

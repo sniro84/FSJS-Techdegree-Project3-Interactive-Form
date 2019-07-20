@@ -1,9 +1,24 @@
+/******************************************
+Treehouse FSJS Techdegree:
+Project 3 - Interactive Form
+Name: Snir Holland
+Date: 22/07/2019
+******************************************/
+
 // creating a headline for the total display
 const $totalDisplay = $('<h2></h2>').text("");
 $('.activities').append($totalDisplay);
 
+// job role
+const $jobRole = $('#title');
+
 // total cost value
 let $totalCost = 0;
+
+// error messages to show when user fills out parts incorrectly
+let $errorMessageName = $('<span></span>').text("");
+$errorMessageName.css('color','red');
+
 
 // perform these actions when the page loads
 $(document).ready(function() {
@@ -23,11 +38,17 @@ $(document).ready(function() {
     const $optionMessage = $('<option></option>').text("Please select a T-shirt theme");
     $('#color').append($optionMessage);
     $('#color').val($optionMessage.val());
+
+    // hide the "Select Payment Method" message once user clicks payment drop-down list
+    $('#payment option[value="select_method"]').hide();
+
+    // hide the text related to paypal and bitcoin payment options
+    $('#credit-card').next().hide();
+    $('#credit-card').next().next().hide();
 });
 
 
 // other-title text field will only appear if other option will be selected.
-const $jobRole = $('#title');
 $jobRole.change(function() {
     ($jobRole.val() === 'other') ? $('#other-title').show() : $('#other-title').hide(); 
 });
@@ -40,7 +61,7 @@ $('#design').change(function() {
         showColors("I ♥ JS"); 
 });
 
-// respond to user when a box is checked/unchecked
+// respond to changes in activity selection when a box is checked/unchecked
 $('input[type="checkbox"]').change(function() {
 
     // actitivity description
@@ -55,18 +76,23 @@ $('input[type="checkbox"]').change(function() {
     const $day = ($time).slice(0,$spaceIndex);
     const $hours = ($time).slice($spaceIndex + 1);
 
-    // the cost of the clicked activity
+    // the cost of the chosen activity
     const $cost = parseInt(($description).slice($dollarIndex + 1));
 
-    // the activity that has been clicked
-    const $currentActivity = this;
-    
+    // the activity that has been clicked 
+    const $chosenActivity = this;
+
     // update total cost according to user clicks
-    if ($currentActivity.checked)
+    if ($chosenActivity.checked)
         $totalCost += $cost;
     else
         $totalCost -= $cost;
-    ($totalDisplay).text("Total: $" + $totalCost); 
+
+    // update display of total cost    
+    if ($totalCost > 0)    
+        ($totalDisplay).text("Total: $" + $totalCost);
+    else     
+        ($totalDisplay).text("");
 
     // disable conflictiong activities
     $('input[type="checkbox"]').each(function() {
@@ -82,21 +108,44 @@ $('input[type="checkbox"]').change(function() {
         // a conflicting activity has been found
         if ($sameActivity && $includesDay && $includesHours)
         {
-            // if the current activity has been checked, grey out conflicting activities.
-                if ($currentActivity.checked) {
+            // if the chosen activity has been checked, grey out conflicting activities.
+                if ($chosenActivity.checked) {
                 $(this).attr("disabled", true);
                 $(this).parent()[0].style.color = "grey";
             }
 
-            // if the current activity has been unchecked, make the no-longer conflicting activities clickable.
+            // if the chosen activity has been unchecked, make the no-longer conflicting activities clickable.
             else {
                 $(this).attr("disabled", false);
                 $(this).parent()[0].style.color = "black";
             }
-        }
-                  
+        }  
     });
 });
+
+
+// respond to changes in payment option
+$('#payment').change(function() {
+
+    // helper variables to store payment options
+    const $creditCard = $('#credit-card');
+    const $payPal = $creditCard.next();
+    const $bitcoin = $payPal.next();
+    
+    // hide all the descriptive text content that is related to payment options
+    $creditCard.hide();
+    $payPal.hide();
+    $bitcoin.hide();
+
+    // show descriptive text content with respect to the user's choice of payment
+    if ($('#payment').val() === "credit card")
+        $creditCard.show();        
+    else if ($('#payment').val() === "paypal")
+        $payPal.show();        
+    else 
+        $bitcoin.show();
+});
+
 
 
 /** this helper function recieves a shirt category and show colors
@@ -123,6 +172,28 @@ function showColors(shirtCategory)
         }
     });  
 }
+
+$('input#name').keyup(function() {
+    const $value = $('input#name').val();
+    ($errorMessageName).insertAfter($('input#name')); 
+
+    if (! (isValidName($value)) )
+    {
+        $errorMessageName.text("Name must be filled out.");
+        this.style.border = "solid 3px red";
+    }
+    else
+    {
+        $errorMessageName.text("");
+        this.style.border = "";
+    }
+});
+
+function isValidName(name)
+{
+    return !( /^[\s]*$/.test(name) );
+}
+
 
 
 
