@@ -6,7 +6,7 @@ Date: 22/07/2019
 ******************************************/
 
 // creating a headline for the total display
-const $totalDisplay = $('<h2></h2>').text("");
+const $totalDisplay = $('<span></span>').text("");
 $('.activities').append($totalDisplay);
 
 // job role
@@ -16,7 +16,7 @@ const $jobRole = $('#title');
 let $totalCost = 0;
 
 // error messages to show when user fills out parts incorrectly
-let $errorMessageName = $('<span></span>').text("");
+let $errorMessageName = $('<label></label>').text("");
 $errorMessageName.css('color','red');
 
 
@@ -109,9 +109,9 @@ $('input[type="checkbox"]').change(function() {
         if ($sameActivity && $includesDay && $includesHours)
         {
             // if the chosen activity has been checked, grey out conflicting activities.
-                if ($chosenActivity.checked) {
+            if ($chosenActivity.checked) {
                 $(this).attr("disabled", true);
-                $(this).parent()[0].style.color = "grey";
+                $(this).parent()[0].style.color = "grey";               
             }
 
             // if the chosen activity has been unchecked, make the no-longer conflicting activities clickable.
@@ -173,7 +173,7 @@ function showColors(shirtCategory)
     });  
 }
 
-$('input#name').keyup(function() {
+$('input#name').on('keyup focusout' , function() {
     const $value = $('input#name').val();
     ($errorMessageName).insertAfter($('input#name')); 
 
@@ -187,6 +187,10 @@ $('input#name').keyup(function() {
         $errorMessageName.text("");
         this.style.border = "";
     }
+});
+
+$('input#mail').focusout(function(){
+    //alert("focus out");
 });
 
 function isValidName(name)
