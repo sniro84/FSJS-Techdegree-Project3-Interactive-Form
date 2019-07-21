@@ -37,6 +37,7 @@ $('.activities').append($totalDisplay);
 
 // perform the following actions when the page loads
 $(document).ready(function() {
+    
     // set focus on the name input
     $('#name').focus();
 
@@ -59,6 +60,9 @@ $(document).ready(function() {
 
     // hide the "Select Payment Method" message once user clicks payment drop-down list
     $('#payment option[value="select_method"]').hide();
+
+    // make credit card the default payment option
+    $('#payment').val("credit card");
 
     // hide the text related to paypal and bitcoin payment options
     $('#credit-card').next().hide();
