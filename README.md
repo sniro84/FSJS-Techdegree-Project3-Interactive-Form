@@ -1,4 +1,4 @@
-# Project 3 - Interactive Form
+# Project #3 - Interactive Form
 
 Third project in the FullStack JavaScript Techdegree.
 
