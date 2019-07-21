@@ -192,33 +192,6 @@ $('#payment').change(function() {
         $bitcoin.show();
 });
 
-
-
-/** this helper function recieves a shirt category and show colors
-    associated with it in the colors drop-down list. **/ 
-function showColors(shirtCategory)
-{
-    // select the color options
-    $options = $('#color option');
-
-    // if the option value (e.g color) equals one of the parameters, show it in the drop-down list. 
-    $options.each( function(index, element) {
-        if (element.text.includes(shirtCategory))
-            $options.eq(index).show();
-        else
-            $options.eq(index).hide();    
-    });
-
-    // make first color the default choice from color drop-down list.
-    $options.each( function(index, element) {
-        if (element.text.includes(shirtCategory))  // color belongs to shirt category
-        {
-            $('#color').val(element.value);
-            return false; // break out of the loop once a color has been found.
-        }
-    });  
-}
-
 // dynamically respond to changes in the name text field.
 $('input#name').on('keyup focusout' , function() {
     
@@ -342,6 +315,30 @@ $('form').submit(function(event) {
         event.preventDefault();    
 });
 
+/** this helper function recieves a shirt category and show colors
+    associated with it in the colors drop-down list. **/ 
+function showColors(shirtCategory)
+{
+    // select the color options
+    $options = $('#color option');
+
+    // if the option value (e.g color) equals one of the parameters, show it in the drop-down list. 
+    $options.each( function(index, element) {
+        if (element.text.includes(shirtCategory))
+            $options.eq(index).show();
+        else
+            $options.eq(index).hide();    
+    });
+
+    // make first color the default choice from color drop-down list.
+    $options.each( function(index, element) {
+        if (element.text.includes(shirtCategory))  // color belongs to shirt category
+        {
+            $('#color').val(element.value);
+            return false; // break out of the loop once a color has been found.
+        }
+    });  
+}
 
 // helper function that validates name
 function isValidName(name)
