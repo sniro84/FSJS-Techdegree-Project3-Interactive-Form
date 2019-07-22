@@ -6,34 +6,34 @@ Date: 22/07/2019
 ******************************************/
 
 // total cost value
-let $totalCost = 0;
+let totalCost = 0;
 
 // activities counter
-let $activityCount = 0;
+let activityCount = 0;
 
 // error messages to show when user fills out parts incorrectly
-let $errorMessageName = $('<label></label>').text("");
-$errorMessageName.css('color','red');
+let errorMessageName = $('<label></label>').text("");
+errorMessageName.css('color','red');
 
-let $errorMessageMail = $('<label></label>').text("");
-$errorMessageMail.css('color','red');
+let errorMessageMail = $('<label></label>').text("");
+errorMessageMail.css('color','red');
 
-let $errorMessageCreditCardNum = $('<label></label>').text("");
-$errorMessageCreditCardNum.css('color','red');
+let errorMessageCreditCardNum = $('<label></label>').text("");
+errorMessageCreditCardNum.css('color','red');
 
-let $errorMessageCreditCardZip = $('<label></label>').text("");
-$errorMessageCreditCardZip.css('color','red');
+let errorMessageCreditCardZip = $('<label></label>').text("");
+errorMessageCreditCardZip.css('color','red');
 
-let $errorMessageCreditCardCvv = $('<label></label>').text("");
-$errorMessageCreditCardCvv.css('color','red');
+let errorMessageCreditCardCvv = $('<label></label>').text("");
+errorMessageCreditCardCvv.css('color','red');
 
-const $errorMessageActivity = $('<label></label>').text("");
-$errorMessageActivity.css('color','red');
-$('.activities').append($errorMessageActivity);
+const errorMessageActivity = $('<label></label>').text("");
+errorMessageActivity.css('color','red');
+$('.activities').append(errorMessageActivity);
 
 // creating a headline for the total display
-const $totalDisplay = $('<label></label>').text("");
-$('.activities').append($totalDisplay);
+const totalDisplay = $('<label></label>').text("");
+$('.activities').append(totalDisplay);
 
 // perform the following actions when the page loads
 $(document).ready(function() {
@@ -54,9 +54,9 @@ $(document).ready(function() {
     $('div #colors-js-puns').hide();
 
     // show a message to the user in the color drop-down list
-    const $optionMessage = $('<option></option>').text("Please select a T-shirt theme");
-    $('#color').append($optionMessage);
-    $('#color').val($optionMessage.val());
+    const optionMessage = $('<option></option>').text("Please select a T-shirt theme");
+    $('#color').append(optionMessage);
+    $('#color').val(optionMessage.val());
 
     // hide the "Select Payment Method" message once user clicks payment drop-down list
     $('#payment option[value="select_method"]').hide();
@@ -92,57 +92,57 @@ $('#design').change(function() {
 $('input[type="checkbox"]').change(function() {
 
     // actitivity description
-    const $description = $(this).parent().text();
+    const description = $(this).parent().text();
 
     // helper variables to store information from activity description
-    const $dollarIndex = ($description).indexOf('$');
-    const $dashIndex = ($description).indexOf('—');
-    const $commaIndex = ($description).indexOf(',');
-    const $time = ($description).slice($dashIndex + 2, $commaIndex);
-    const $spaceIndex = ($time).indexOf(" "); 
-    const $day = ($time).slice(0,$spaceIndex);
-    const $hours = ($time).slice($spaceIndex + 1);
+    const dollarIndex = description.indexOf('$');
+    const dashIndex = description.indexOf('—');
+    const commaIndex = description.indexOf(',');
+    const time = description.slice(dashIndex + 2, commaIndex);
+    const spaceIndex = time.indexOf(" "); 
+    const day = time.slice(0,spaceIndex);
+    const hours = time.slice(spaceIndex + 1);
 
     // the cost of the chosen activity
-    const $cost = parseInt(($description).slice($dollarIndex + 1));
+    const cost = parseInt(description.slice(dollarIndex + 1));
 
     // the activity that has been clicked 
-    const $chosenActivity = this;
+    const chosenActivity = this;
 
     // update activity count and total cost with respect to checked boxes
-    if ($chosenActivity.checked)
+    if (chosenActivity.checked)
     {
-        $totalCost += $cost;
-        $activityCount++;
+        totalCost += cost;
+        activityCount++;
     }
     else
     {
-        $totalCost -= $cost;
-        $activityCount--;
+        totalCost -= cost;
+        activityCount--;
     }
     
     // update display of total cost    
-    if ($totalCost > 0)    
-        ($totalDisplay).text("Total: $" + $totalCost);
+    if (totalCost > 0)    
+        totalDisplay.text("Total: $" + totalCost);
     else     
-        ($totalDisplay).text("");
+        totalDisplay.text("");
 
     // disable conflictiong activities
     $('input[type="checkbox"]').each(function() {
 
         // iterated actitivity description
-        const $otherDescription = $(this).parent().text();
+        const otherDescription = $(this).parent().text();
 
         // helper boolean variables to decide whether a checkbox should be turned on/off.
-        const $sameActivity = ($description !== $otherDescription);
-        const $includesDay = ($otherDescription).includes($day);
-        const $includesHours =  ($otherDescription).includes($hours);
+        const sameActivity = (description !== otherDescription);
+        const includesDay = (otherDescription).includes(day);
+        const includesHours =  (otherDescription).includes(hours);
 
         // a conflicting activity has been found
-        if ($sameActivity && $includesDay && $includesHours)
+        if (sameActivity && includesDay && includesHours)
         {
             // if the chosen activity has been checked, grey out conflicting activities.
-            if ($chosenActivity.checked) {
+            if (chosenActivity.checked) {
                 $(this).attr("disabled", true);
                 $(this).parent()[0].style.color = "grey";               
             }
@@ -164,12 +164,12 @@ $('input[type="checkbox"]').focusout(function() {
     
     if (isValidActivityChecked())  // at least one activity has been checked
     {
-        $errorMessageActivity.text(""); 
+        errorMessageActivity.text(""); 
         this.style.border = ""; 
     }
     else  // no activities have been checked
     {
-        $errorMessageActivity.text("Please choose at least one activity.");
+        errorMessageActivity.text("Please choose at least one activity.");
         this.style.border = "solid 3px red";
     }
 });
@@ -200,17 +200,17 @@ $('#payment').change(function() {
 $('input#name').on('keyup focusout' , function() {
     
     // creating an error message
-    const $value = $('input#name').val();
-    ($errorMessageName).insertAfter($('input#name')); 
+    const value = $('input#name').val();
+    errorMessageName.insertAfter($('input#name')); 
 
-    if (isValidName($value)) // valid name --> hide error message
+    if (isValidName(value)) // valid name --> hide error message
     {
-        $errorMessageName.text("");
+        errorMessageName.text("");
         this.style.border = "";
     }
     else   // invalid name --> show error message
     {
-        $errorMessageName.text("Please fill out a name.");
+        errorMessageName.text("Please fill out a name.");
         this.style.border = "solid 3px red";
     }
 });
@@ -219,20 +219,20 @@ $('input#name').on('keyup focusout' , function() {
 $('input#mail').on('keyup focusout' , function() {
 
     // creating an error message
-    const $value = $('input#mail').val();
-    ($errorMessageMail).insertAfter($('input#mail'));
+    const value = $('input#mail').val();
+    errorMessageMail.insertAfter($('input#mail'));
 
-    if (isValidEmail($value)) // valid email address --> hide error message
+    if (isValidEmail(value)) // valid email address --> hide error message
     {
-        $errorMessageMail.text("");
+        errorMessageMail.text("");
         this.style.border = "";
     }
     else // invalid email address --> show error message
     {
-        if ($value === "")
-            $errorMessageMail.text("Please fill out an Email.");
+        if (value === "")
+            errorMessageMail.text("Please fill out an Email.");
         else   
-            $errorMessageMail.text("'"  + $value + "' is not a valid Email address.");
+            errorMessageMail.text("'"  + value + "' is not a valid Email address.");
         this.style.border = "solid 3px red";
     }
 });
@@ -241,20 +241,20 @@ $('input#mail').on('keyup focusout' , function() {
 $('input#cc-num').on('keyup focusout' , function() {
 
     // creating an error message
-    const $value = $('input#cc-num').val();
-    ($errorMessageCreditCardNum).insertAfter($('input#cc-num'));
+    const value = $('input#cc-num').val();
+    errorMessageCreditCardNum.insertAfter($('input#cc-num'));
 
-    if (isValidCreditCardNum($value))  // valid credit card number --> hide error message
+    if (isValidCreditCardNum(value))  // valid credit card number --> hide error message
     {
-        $errorMessageCreditCardNum.text("");
+        errorMessageCreditCardNum.text("");
         this.style.border = "";
     }
     else  // invalid credit card number --> show error message
     {
-        if ($value === "")
-            $errorMessageCreditCardNum.text("Please fill out a credit card number.");
+        if (value === "")
+            errorMessageCreditCardNum.text("Please fill out a credit card number.");
         else
-            $errorMessageCreditCardNum.text("Please fill out a number that is between 13 and 16 digits long.");
+            errorMessageCreditCardNum.text("Please fill out a number that is between 13 and 16 digits long.");
         this.style.border = "solid 3px red";
     }
 });
@@ -263,20 +263,20 @@ $('input#cc-num').on('keyup focusout' , function() {
 $('input#zip').on('keyup focusout' , function() {
 
     // creating an error message
-    const $value = $('input#zip').val();
-    ($errorMessageCreditCardZip).insertAfter($('input#zip'));
+    const value = $('input#zip').val();
+    errorMessageCreditCardZip.insertAfter($('input#zip'));
 
-    if (isValidZipCode($value)) // valid zip code --> hide error message
+    if (isValidZipCode(value)) // valid zip code --> hide error message
     {
-        $errorMessageCreditCardZip.text("");
+        errorMessageCreditCardZip.text("");
         this.style.border = "";
     }
     else   // invalid zip code --> show error message
     {
-        if ($value === "")
-            $errorMessageCreditCardZip.text("Please fill out a zip code.");
+        if (value === "")
+            errorMessageCreditCardZip.text("Please fill out a zip code.");
         else
-            $errorMessageCreditCardZip.text("Zip Code must be a 5-digit number.");
+            errorMessageCreditCardZip.text("Zip Code must be a 5-digit number.");
         this.style.border = "solid 3px red";
     }
 });
@@ -285,20 +285,20 @@ $('input#zip').on('keyup focusout' , function() {
 $('input#cvv').on('keyup focusout' , function() {
 
     // creating an error message
-    const $value = $('input#cvv').val();
-    ($errorMessageCreditCardCvv).insertAfter($('input#cvv'));
+    const value = $('input#cvv').val();
+    errorMessageCreditCardCvv.insertAfter($('input#cvv'));
 
-    if (isValidCvv($value))  // valid CVV value --> hide error message
+    if (isValidCvv(value))  // valid CVV value --> hide error message
     {
-        $errorMessageCreditCardCvv.text("");
+        errorMessageCreditCardCvv.text("");
         this.style.border = "";
     }
     else  // invalid CVV value --> show error message
     {
-        if ($value === "")
-            $errorMessageCreditCardCvv.text("Please fill out a CVV value.");
+        if (value === "")
+            errorMessageCreditCardCvv.text("Please fill out a CVV value.");
         else
-            $errorMessageCreditCardCvv.text("CVV value must be a 3-digit number.");
+            errorMessageCreditCardCvv.text("CVV value must be a 3-digit number.");
         this.style.border = "solid 3px red";
     }
 });
@@ -359,7 +359,7 @@ function isValidEmail(email)
 // helper function that validates activities quantity
 function isValidActivityChecked()
 {
-    return ($activityCount > 0);
+    return (activityCount > 0);
 }
 
 // helper function that validates credit card number 
@@ -384,32 +384,32 @@ function isValidCvv(number)
 function isValidForm()
 {
     // helper variables to store name and mail values
-    const $nameValue = $('input#name').val();
-    const $mailValue = $('input#mail').val();
+    const nameValue = $('input#name').val();
+    const mailValue = $('input#mail').val();
 
     // helper boolean variables
-    const $invalidName = !isValidName($nameValue);
-    const $invalidMail = !isValidEmail($mailValue);
+    const invalidName = !isValidName(nameValue);
+    const invalidMail = !isValidEmail(mailValue);
 
     // if either name, email address or activity count is invalid, the form is invalid. 
-    if ($invalidName || $invalidMail || $activityCount === 0)
+    if (invalidName || invalidMail || activityCount === 0)
         return false;
 
     // if payemnt option is not credit card, skip the following    
     if ($('#payment').val() === "credit card")
     {
         // helper variables to store credit card details
-        const $ccNumValue = $('input#cc-num').val();
-        const $zipCodevalue = $('input#zip').val();
-        const $cvvValue = $('input#cvv').val();
+        const ccNumValue = $('input#cc-num').val();
+        const zipCodevalue = $('input#zip').val();
+        const cvvValue = $('input#cvv').val();
 
         // helper boolean variables
-        const $invalidCardNum = !isValidCreditCardNum($ccNumValue);
-        const $invalidZipCode = !isValidZipCode($zipCodevalue);
-        const $invalidCvv = !isValidCvv($cvvValue);
+        const invalidCardNum = !isValidCreditCardNum(ccNumValue);
+        const invalidZipCode = !isValidZipCode(zipCodevalue);
+        const invalidCvv = !isValidCvv(cvvValue);
 
         // if either one of the credit card details is invalid, the form is invalid.
-        if ($invalidCardNum || $invalidZipCode || $invalidCvv)
+        if (invalidCardNum || invalidZipCode || invalidCvv)
             return false;
     }
 
